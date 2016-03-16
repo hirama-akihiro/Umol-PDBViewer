@@ -18,7 +18,7 @@ public class TitleManager : MonoBehaviour {
 	/// </summary>
 	public void OnClickAccesPDBButton()
 	{
-
+		Application.OpenURL("http://www.rcsb.org/pdb/");
 	}
 
 	/// <summary>
