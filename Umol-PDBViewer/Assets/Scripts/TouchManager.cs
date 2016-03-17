@@ -34,7 +34,7 @@ public class TouchManager : MonoBehaviour {
 	private void OneTouching()
 	{
 		Touch touch = Input.GetTouch(0);
-		molecule.transform.Rotate(new Vector3(touch.deltaPosition.y, touch.deltaPosition.x, 0));
+		molecule.transform.Rotate(new Vector3(touch.deltaPosition.y * 0.1f, touch.deltaPosition.x * 0.1f, 0));
 	}
 
 	private void OneTouchEnd()

@@ -709,6 +709,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mTextPDBID: {fileID: 707737410}
   molecule: {fileID: 1534373156}
+  camera: {fileID: 954800971}
 --- !u!4 &1103431315
 Transform:
   m_ObjectHideFlags: 0

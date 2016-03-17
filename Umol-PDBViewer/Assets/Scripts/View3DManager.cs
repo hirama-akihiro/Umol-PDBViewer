@@ -7,6 +7,7 @@ public class View3DManager : MonoBehaviour {
 
 	public Text mTextPDBID;
 	public GameObject molecule;
+	public Camera camera;
 
 	// Use this for initialization
 	void Start () {
@@ -43,13 +44,26 @@ public class View3DManager : MonoBehaviour {
 			string path = Application.persistentDataPath + "/PDB/" + Path.GetFileName(www.url);
 			File.WriteAllBytes(path, www.bytes);
 
+			// Moleculeの重心計算
+			double ptX = 0, ptY = 0, ptZ = 0;
+
 			// ダウンロードしたPDBファイルの読み込み
 			PdbFile pdbfile = PDBParser.ParsePdbFile(path);
 
 			// 原子球を読み込み座標に表示
-			for (int i = 0, c = pdbfile.PdbATOMRecord.Count - 1; i < c; i++)
+			int c = pdbfile.PdbATOMRecord.Count - 1;
+			for (int i = 01; i < c; i++)
 			{
 				PdbRecord record1 = pdbfile.PdbATOMRecord[i];
+
+				ptX += record1.Point.PtX;
+				ptY += record1.Point.PtY;
+				ptZ += record1.Point.PtZ;
+
+				if (i == c - 1) {
+					continue;
+				}
+
 				PdbRecord record2 = pdbfile.PdbATOMRecord[i + 1];
 
 				if(record1.AminoNo + 1 != record2.AminoNo) { continue; }
@@ -67,6 +81,13 @@ public class View3DManager : MonoBehaviour {
 				atom.transform.parent = molecule.transform;
 				edde.transform.parent = molecule.transform;
 			}
+
+			ptX /= c;
+			ptY /= c;
+			ptZ /= c;
+
+			molecule.transform.position = new Vector3 ((float)ptX, (float)ptY, (float)ptZ);
+			camera.transform.position = molecule.transform.position + new Vector3 (0, 0, -20);
 		}
 	}
 
